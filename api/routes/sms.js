@@ -10,8 +10,15 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+  const sms = {
+    receiver: req.body.contactId,
+    sender: req.body.senderId,
+    message: req.body.message,
+    status: req.body.status
+  };
   res.status(200).json({
-    message: "sms get request"
+    message: "SMS was created",
+    smsCreated: sms
   });
 });
 

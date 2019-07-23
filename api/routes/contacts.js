@@ -10,8 +10,13 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+  const contact = {
+    name: req.body.name,
+    number: req.body.number
+  };
   res.status(200).json({
-    message: "contact was added"
+    message: "Contact was added",
+    createdContact: contact
   });
 });
 
