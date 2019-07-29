@@ -2,6 +2,17 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+/**
+ * Make database connection
+ */
+mongoose.connect(
+  "mongodb+srv://collinsNjau:" +
+    process.env.MONGO_PASSWORD +
+    "@sms-management-andela-3wunv.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
