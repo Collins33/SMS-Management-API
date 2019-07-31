@@ -10,7 +10,23 @@ const Contact = require("../models/contacts");
  */
 router.get("/", (req, res, next) => {
   Contact.find()
-    .then(response => {
+    .select("name number _id")
+    .then(contacts => {
+      const response = {
+        count: contacts.length,
+        contacts: contacts.map(contact => {
+          return {
+            name: contact.name,
+            number: contact.number,
+            _id: contact._id,
+            request: {
+              type: "GET",
+              description: "Get a single contact",
+              url: "http://localhost:3000/api/v1/contacts/" + contact._id
+            }
+          };
+        })
+      };
       res.status(200).json(response);
     })
     .catch(err => {
@@ -29,9 +45,19 @@ router.post("/", (req, res, next) => {
   contact
     .save()
     .then(result => {
+      const contactCreated = {
+        name: result.name,
+        number: result.number,
+        _id: result._id,
+        request: {
+          type: "GET",
+          description: "Get the created contact",
+          url: "http://localhost:3000/api/v1/contacts/" + result._id
+        }
+      };
       res.status(201).json({
         message: "Contact was added",
-        createdContact: result
+        createdContact: contactCreated
       });
     })
     .catch(error => {
@@ -45,9 +71,13 @@ router.get("/:contactId", (req, res, next) => {
   const { contactId } = req.params;
   Contact.findById(contactId)
     .then(contact => {
-      console.log(contact);
       if (contact) {
-        res.status(200).json(contact);
+        const response = {
+          name: contact.name,
+          number: contact.number,
+          _id: contact._id
+        };
+        res.status(200).json(response);
       } else {
         res.status(404).json({
           message: "Contact does not exist"
@@ -84,8 +114,8 @@ router.delete("/:contactId", (req, res, next) => {
     .then(response => {
       res.status(200).json(response);
     })
-    .catch(error => {
-      res.status(500).json({ error: error });
+    .catch(err => {
+      res.status(500).json({ error: err });
     });
 });
 
