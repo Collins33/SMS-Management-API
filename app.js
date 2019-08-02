@@ -11,6 +11,7 @@ mongoose.connect(
   "mongodb+srv://collinsNjau:" +
     process.env.MONGO_PASSWORD +
     "@sms-management-andela-3wunv.mongodb.net/test?retryWrites=true&w=majority",
+
   { useNewUrlParser: true }
 );
 
