@@ -3,6 +3,14 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const SmsModel = require("../models/sms");
 const Contact = require("../models/contacts");
+
+const environment = process.env.ENVIRONMENT;
+let url;
+if (environment === "local") {
+  url = "http://localhost:3000";
+} else if (environment === "production") {
+  url = "https://sms-management-33.herokuapp.com";
+}
 /**
  * register the routes
  */
@@ -23,7 +31,7 @@ router.get("/", (req, res, next) => {
             message: message.message,
             request: {
               type: "GET",
-              url: "http://localhost:3000/api/v1/sms/" + message._id
+              url: url + "/api/v1/sms/" + message._id
             }
           };
         })
@@ -67,7 +75,7 @@ router.post("/", (req, res, next) => {
         request: {
           type: "GET",
           description: "Get a single sms",
-          url: "http://localhost:3000/api/v1/sms/" + result._id
+          url: url + "/api/v1/sms/" + result._id
         }
       });
     })
@@ -93,7 +101,7 @@ router.get("/:smsId", (req, res, next) => {
         response: {
           type: "GET",
           description: "Get all sms",
-          url: "http://localhost:3000/api/v1/sms/"
+          url: url + "/api/v1/sms/"
         }
       });
     })
@@ -125,7 +133,7 @@ router.delete("/:smsId", (req, res, next) => {
         request: {
           type: "GET",
           description: "Get all sms",
-          url: "http://localhost:3000/api/v1/sms/"
+          url: url + "/api/v1/sms/"
         }
       });
     })

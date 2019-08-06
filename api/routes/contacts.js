@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 
+const environment = process.env.ENVIRONMENT;
+let url;
+if (environment === "local") {
+  url = "http://localhost:3000";
+} else if (environment === "production") {
+  url = "https://sms-management-33.herokuapp.com";
+}
+
 // import the schema
 const Contact = require("../models/contacts");
 
@@ -22,7 +30,7 @@ router.get("/", (req, res, next) => {
             request: {
               type: "GET",
               description: "Get a single contact",
-              url: "http://localhost:3000/api/v1/contacts/" + contact._id
+              url: url + "/api/v1/contacts/" + contact._id
             }
           };
         })
@@ -52,7 +60,7 @@ router.post("/", (req, res, next) => {
         request: {
           type: "GET",
           description: "Get the created contact",
-          url: "http://localhost:3000/api/v1/contacts/" + result._id
+          url: url + "/api/v1/contacts/" + result._id
         }
       };
       res.status(201).json({
