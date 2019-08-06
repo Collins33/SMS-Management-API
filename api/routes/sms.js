@@ -9,6 +9,7 @@ const Contact = require("../models/contacts");
 router.get("/", (req, res, next) => {
   SmsModel.find()
     .select("message receiverContactId status senderContactId")
+    .populate("receiverContactId")
     .exec()
     .then(messages => {
       res.status(200).json({
@@ -114,7 +115,6 @@ router.delete("/:smsId", (req, res, next) => {
   SmsModel.remove({ _id: smsId })
     .exec()
     .then(result => {
-      console.log(result.n);
       if (result.n == 0) {
         return res.status(404).json({
           message: "The sms does not exist"
