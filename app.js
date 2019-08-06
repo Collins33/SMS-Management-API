@@ -45,6 +45,15 @@ app.use((req, res, next) => {
 });
 
 /**
+ * Welcome route
+ */
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to the application"
+  });
+});
+
+/**
  * setup middleware
  * incoming request will
  * go through this
