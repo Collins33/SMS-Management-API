@@ -17,7 +17,7 @@ if (environment === "local") {
 router.get("/", (req, res, next) => {
   SmsModel.find()
     .select("message receiverContactId status senderContactId")
-    .populate("receiverContactId")
+    .populate("receiverContactId senderContactId")
     .exec()
     .then(messages => {
       res.status(200).json({
@@ -89,6 +89,7 @@ router.post("/", (req, res, next) => {
 router.get("/:smsId", (req, res, next) => {
   const smsId = req.params.smsId;
   SmsModel.findById(smsId)
+    .populate("receiverContactId senderContactId")
     .exec()
     .then(result => {
       if (!result) {

@@ -7,7 +7,11 @@ const smsSchema = mongoose.Schema({
     required: true
   },
   message: { type: String, required: true },
-  senderContactId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  senderContactId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Contact",
+    required: true
+  },
   status: { type: String, required: true }
 });
 
