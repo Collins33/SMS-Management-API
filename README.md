@@ -33,9 +33,9 @@ The API provides a user a way to manage messages he sends and also track who rec
 | PATCH /api/V1/contact/:contactId  |  This will edit a specific contact  |
 | DELETE /api/V1/contact/:contactId |     This will delete a contact      |
 | POST /api/api/v1/sms              |       This will create an sms       |
-| GET /api/api/v1/sms               |     This will get all sms sent      |
-| GET /api/api/v1/sms/:smsId        |     This will get a single sms      |
-| DELETE /api/api/v1/sms/:smsId     |   This will delete a specific sms   |
+| GET /api/v1/sms                   |     This will get all sms sent      |
+| GET /api/v1/sms/:smsId            |     This will get a single sms      |
+| DELETE /api/v1/sms/:smsId         |   This will delete a specific sms   |
 
 ## Built With
 
