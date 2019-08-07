@@ -12,6 +12,7 @@ if (environment === "local") {
 
 // import the schema
 const Contact = require("../models/contacts");
+const SmsModel = require("../models/sms");
 
 /**
  * register the routes
@@ -119,8 +120,12 @@ router.patch("/:contactId", (req, res, next) => {
 router.delete("/:contactId", (req, res, next) => {
   const { contactId } = req.params;
   Contact.remove({ _id: contactId })
-    .then(response => {
-      res.status(200).json(response);
+    .then(() => {
+      SmsModel.remove({ senderContactId: contactId }).then(() => {
+        res.status(200).json({
+          message: "Successfully deleted the contact"
+        });
+      });
     })
     .catch(err => {
       res.status(500).json({ error: err });
