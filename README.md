@@ -1,5 +1,7 @@
 # SMS-Management-API
 
+[![Build Status](https://travis-ci.org/Collins33/SMS-Management-API.svg?branch=develop)](https://travis-ci.org/Collins33/SMS-Management-API)
+
 SMS management API
 The API provides a user a way to manage messages he sends and also track who receives the message.
 
