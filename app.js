@@ -3,17 +3,29 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 /**
  * Make database connection
  */
-mongoose.connect(
-  "mongodb+srv://collinsNjau:" +
-    process.env.MONGO_PASSWORD +
-    "@sms-management-andela-3wunv.mongodb.net/test?retryWrites=true&w=majority",
+const environment = process.env.ENVIRONMENT;
+if (environment === "local" || environment === "production") {
+  mongoose.connect(
+    "mongodb+srv://collinsNjau:" +
+      process.env.MONGO_PASSWORD +
+      "@sms-management-andela-3wunv.mongodb.net/test?retryWrites=true&w=majority",
 
-  { useNewUrlParser: true }
-);
+    { useNewUrlParser: true }
+  );
+} else if (environment === "testing") {
+  mongoose.connect(
+    "mongodb+srv://collinsMuru:" +
+      process.env.MONGO_PASSWORD +
+      "@sms-management-test-bglsq.mongodb.net/test?retryWrites=true&w=majority",
+
+    { useNewUrlParser: true }
+  );
+}
 
 /**
  * Use the default node js promise
