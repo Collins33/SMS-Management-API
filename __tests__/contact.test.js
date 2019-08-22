@@ -6,7 +6,7 @@ const expect = chai.expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
-describe("SMS management", () => {
+describe("Contacts management", () => {
   beforeEach(done => {
     Contact.remove({}, err => {
       if (err) console.log(err);
@@ -97,6 +97,28 @@ describe("SMS management", () => {
             .request(app)
             .put("/api/v1/contacts/" + res.body.createdContact._id)
             .send(updateContactName)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              done();
+            });
+        });
+    });
+  });
+
+  describe("/DELETE delete a single contact", () => {
+    it("should delete a single contact", done => {
+      const newContact = {
+        name: "collins",
+        number: "09876545567"
+      };
+      chai
+        .request(app)
+        .post("/api/v1/contacts/")
+        .send(newContact)
+        .end((err, res) => {
+          chai
+            .request(app)
+            .delete("/api/v1/contacts/" + res.body.createdContact._id)
             .end((err, res) => {
               expect(res).to.have.status(200);
               done();

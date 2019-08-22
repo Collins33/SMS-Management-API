@@ -48,7 +48,6 @@ exports.sms_add_one = (req, res, next) => {
           message: "The contact does not exist"
         });
       }
-
       const sms = new SmsModel({
         _id: mongoose.Types.ObjectId(),
         message: req.body.message,
