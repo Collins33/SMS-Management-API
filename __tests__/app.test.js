@@ -76,4 +76,32 @@ describe("SMS management", () => {
         });
     });
   });
+
+  describe("/PUT update single contact route", () => {
+    it("should edit a single contact", done => {
+      const newContact = {
+        name: "collins",
+        number: "09876545567"
+      };
+
+      const updateContactName = {
+        name: "colontino"
+      };
+
+      chai
+        .request(app)
+        .post("/api/v1/contacts/")
+        .send(newContact)
+        .end((err, res) => {
+          chai
+            .request(app)
+            .put("/api/v1/contacts/" + res.body.createdContact._id)
+            .send(updateContactName)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              done();
+            });
+        });
+    });
+  });
 });

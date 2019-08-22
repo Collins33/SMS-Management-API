@@ -96,22 +96,19 @@ exports.contact_get_one = (req, res, next) => {
     });
 };
 
-exports.contact_patch_one = (req, res, next) => {
+exports.contact_edit_one = (req, res, next) => {
   const { contactId } = req.params;
-  const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propsName] = ops.value;
-  }
-  Contact.update({ _id: contactId }, { $set: updateOps })
-    .exec()
-    .then(result => {
-      res.status(200).json(result);
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: err
+  Contact.findById(contactId).then(contact => {
+    contact.name = req.body.name || contact.name;
+    contact.number = req.body.number || contact.number;
+    contact.save(function(err) {
+      if (err) throw err;
+      res.status(200).json({
+        message: "Contact was updated successfully",
+        updatedContact: contact
       });
     });
+  });
 };
 
 exports.contact_delete_one = (req, res, next) => {

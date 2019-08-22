@@ -11,7 +11,7 @@ router.post("/", ContactsController.contact_create);
 
 router.get("/:contactId", ContactsController.contact_get_one);
 
-router.patch("/:contactId", ContactsController.contact_patch_one);
+router.put("/:contactId", ContactsController.contact_edit_one);
 
 router.delete("/:contactId", ContactsController.contact_delete_one);
 
